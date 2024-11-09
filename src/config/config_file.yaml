@@ -1,0 +1,13 @@
+training_parameters:
+  train_path: data/train
+  test_path: data/test
+  image_size: 128
+  channels: 3
+  epochs: 6
+  batch_size: 32
+  learning_rate: 0.001
+  accuracy_task: multiclass
+  accuracy_avg: micro
+  optim_step_size: 4
+  output_dir: ../models
+  output_save_model: model.pth

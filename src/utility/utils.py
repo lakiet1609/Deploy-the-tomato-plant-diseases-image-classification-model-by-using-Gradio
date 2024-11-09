@@ -1,5 +1,7 @@
 import torch
 import os
+import yaml
+
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -65,8 +67,7 @@ def save_model(model: torch.nn.Module,
     model_save_path = target_dir_path / model_name
 
     # Save the model state_dict()
-    torch.save(obj=model.state_dict(),
-             f=model_save_path)
+    torch.save(obj=model.state_dict(), f=model_save_path)
 
 
 def find_classes(target_dir):
@@ -75,5 +76,16 @@ def find_classes(target_dir):
         raise FileNotFoundError(f'Could not find any classes in {target_dir}')
     class_to_idx = {class_name: i for i, class_name in enumerate(classes)}
     return classes, class_to_idx
+
+def read_yaml(file_path):
+    with open(file_path, 'r') as file:
+        try:
+            data = yaml.safe_load(file)
+            return data
+        except yaml.YAMLError as e:
+            print(f"Error reading YAML file: {e}")
+            return None
+
+
 
      
