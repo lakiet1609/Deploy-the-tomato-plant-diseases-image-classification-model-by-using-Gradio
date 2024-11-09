@@ -5,8 +5,8 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from typing import Tuple, Dict
 from timeit import default_timer as timer
-from cnn_model import custom_model
-from custom_dataset import find_classes
+from src.model.cnn_model import custom_model
+from src.ingest.custom_dataset import find_classes
 
 classes, class_to_idx = find_classes(r'data\test')
 

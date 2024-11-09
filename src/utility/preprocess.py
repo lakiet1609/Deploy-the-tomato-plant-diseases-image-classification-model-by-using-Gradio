@@ -4,6 +4,7 @@ import shutil
 from pathlib import Path
 from PIL import Image
 
+
 #Count the images in each class
 def check_data(target_dir):
     for subfolder in os.listdir(target_dir):
@@ -11,6 +12,7 @@ def check_data(target_dir):
         count_images = len([file for file in os.listdir(subfolder_path)])
         count_images_format = len([file for file in os.listdir(subfolder_path) if file.endswith(('.jpg', '.JPG'))])
         print(f'{subfolder} has {count_images} images and {count_images_format} in format .jpg')
+
 
 
 #Split the data into train folder and test folder

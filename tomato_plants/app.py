@@ -1,7 +1,7 @@
 import gradio as gr
 import os
 import torch
-from cnn_model import custom_model
+from src.model.cnn_model import custom_model
 from timeit import default_timer as timer
 from typing import Tuple, Dict
 from torchvision import transforms

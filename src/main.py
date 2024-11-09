@@ -1,22 +1,18 @@
 import torch
 import os
-import cnn_model 
-from custom_dataset import find_classes
-from data_preprocess import custom_folder
-from data_loader import load_data
-from utils import visualize_image, plot_evaluation_curve, save_model
-from engine import training
-from prediction import pred_and_plot_image, predict_gradio
+from src.model.cnn_model import CNNModel
+from src.ingest.custom_dataset import find_classes
+from src.utility.preprocess import custom_folder
+from src.ingest.custom_dataset import CustomDataLoader
+from src.utility.utils import visualize_image, plot_evaluation_curve, save_model
+from src.engine import training
+from src.prediction import pred_and_plot_image, predict_gradio
 from torchmetrics import Accuracy, Recall
 import torch.nn as nn
 from timeit import default_timer as timer 
 from PIL import Image
 
 def main():
-    #Split folder in to right form
-    data_path = 'data'
-    # custom_folder(data_path)
-    
     #Set up directory
     train_path = r'data/train'
     test_path = r'data/test'
@@ -34,32 +30,23 @@ def main():
     #Get class
     classes, class_to_idx = find_classes(train_path)
     num_classes = len(classes)
-    print(classes)
 
     # Create dataloader
-    # load_train_data, load_test_data = load_data(train_dir=train_path,
-    #                                               test_dir=test_path,
-    #                                               batch_size=batch_size,
-    #                                               image_size=image_size,
-    #                                               num_workers=num_workers)
+    custom_data_loader = CustomDataLoader(train_dir=train_path,
+                                          test_dir=test_path,
+                                          batch_size=batch_size,
+                                          image_size=image_size)
+    
+    train_data, test_data = custom_data_loader.load_data()
 
-    # #Get 1 batch_size in training data
-    # x_batch, y_batch = next(iter(load_train_data))
-     
-    # #Visualize 1 batch of image
-    # visualize_image(x_batch=x_batch,
-    #                 y_batch=y_batch,
-    #                 batch_size=batch_size,
-    #                 class_idx=class_to_idx)
+    # Create model
+    CNN_model = CNNModel(input_param=channels, output_param=num_classes)
     
-    #Create model
-    # model_1 = cnn_model.custom_model(input_param=channels, output_param=num_classes)
-    
-    # #Compile model
-    # loss_function = nn.CrossEntropyLoss()
-    # accuracy = Recall(task="multiclass", average='micro', num_classes=num_classes).to(device)
-    # optimizer = torch.optim.Adam(params=model_1.parameters(), lr=learning_rate)
-    # torch.optim.lr_scheduler.StepLR(optimizer, step_size=4)
+    #Compile model
+    loss_function = nn.CrossEntropyLoss()
+    accuracy = Recall(task="multiclass", average='micro', num_classes=num_classes).to(device)
+    optimizer = torch.optim.Adam(params=CNN_model.parameters(), lr=learning_rate)
+    torch.optim.lr_scheduler.StepLR(optimizer, step_size=4)
 
     # #Training progress
     # start_time = timer()

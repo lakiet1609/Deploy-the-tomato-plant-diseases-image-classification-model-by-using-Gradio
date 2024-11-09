@@ -1,6 +1,7 @@
 import torch.nn as nn
 
-class custom_model(nn.Module):
+
+class CNNModel(nn.Module):
     def __init__(self, input_param: int, output_param: int):
         super().__init__()      
         self.layer_block1 = nn.Sequential(

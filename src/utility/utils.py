@@ -1,4 +1,6 @@
 import torch
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -65,5 +67,13 @@ def save_model(model: torch.nn.Module,
     # Save the model state_dict()
     torch.save(obj=model.state_dict(),
              f=model_save_path)
+
+
+def find_classes(target_dir):
+    classes = sorted(sub_dir.name for sub_dir in os.scandir(target_dir) if sub_dir.is_dir())
+    if not classes:
+        raise FileNotFoundError(f'Could not find any classes in {target_dir}')
+    class_to_idx = {class_name: i for i, class_name in enumerate(classes)}
+    return classes, class_to_idx
 
      
