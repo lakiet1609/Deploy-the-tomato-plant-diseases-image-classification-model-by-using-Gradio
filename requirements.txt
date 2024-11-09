@@ -1,0 +1,4 @@
+torchmetrics
+torch
+torchvision
+matplotlib
